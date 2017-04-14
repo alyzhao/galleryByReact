@@ -10,7 +10,7 @@ module.exports = function(config) {
     files: [
       'test/loadtests.js'
     ],
-    port: 8088,
+    port: 8083,
     captureTimeout: 60000,
     frameworks: [ 'mocha', 'chai' ],
     client: {

@@ -13,6 +13,20 @@
 	super	关键字，它指代父类的实例（即父类的this对象）。子类必须在constructor方法中调用super方法，否则新建实例时会报错。
 	arrow function 	(parma) => {}
 	`...${a}...` 	输出变量
+	export与export default均可用于导出常量、函数、文件、模块等
+	import (常量 | 函数 | 文件 | 模块)名的方式将其导入
 
 4.Array的map()方法
 	arr.map((x) => retuen x*x )		// 输出数组元素的平方
+
+
+
+
+
+
+遇到的错误:
+	1.imageDatas没有解析出来,defaut.js中添加对.json的解析 npm install json-loader
+	2.App.less 没有解析出来, npm install less-loader    // 尝试另一种方法使用lessc 和 wr
+
+
+
