@@ -1,4 +1,16 @@
 
+/*
+ *使用Iconfont，字体文件代替图片文件展示图标
+ *Iconfont的体积更小
+ *Iconfont是矢量图，拉伸不变形，颜色可自行更换，支持CSS3对字体的修饰效果
+ */
+@font-face{
+  font-family: 'icons-turn-arrow';
+  src: url('../fonts/icons/iconfont.eot') format('enbedded'),
+       url('../fonts/icons/iconfont.woff') format('woff'),
+       url('../fonts/icons/iconfont.ttf') format('truetype'),
+       url('../fonts/icons/iconfont.svg') format('svg');
+}
 
 
 /* 变量定义 */
@@ -9,7 +21,7 @@
 html,body {
   width: 100%;
   height: 100%;
-  background: #222;  
+  background-color: #222; 
 }
 
 .app{
@@ -20,7 +32,7 @@ html,body {
 .stage{
   position: relative;
   width: 100%;
-  height: 680px;  
+  height: 100%;  
 }
 
 .img-sec{
@@ -29,7 +41,7 @@ html,body {
   height: 100%;
   overflow: hidden;
   background-color: #ddd;
-
+  display: block;
   perspective: 1800px; 
 }
 
@@ -53,7 +65,7 @@ html,body {
   }  
 
   &.is-inverse {
-    transform: translate(260px) rotateY(180deg);
+    transform: translate(320px) rotateY(180deg);
   }
 }
 
@@ -78,8 +90,60 @@ figcaption{
     color: #666;
     background: #fff;
 
-    transform: rotateY(180deg) translateZ(1px);
+    transform: rotateY(180deg) translateZ(1px);   /*css3动画*/
   }
 }
 
+/* 底部控制组件 */
+.controller-nav{
+  position: absolute;
+  left: 0;
+  bottom: 30px;
+  z-index: 101;
+  width: 100%;
+  text-align: center;
+  transition: background-color 6s;
+}
 
+.controller-unit{
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  margin: 0 5px;
+
+  background-color: #aaa;
+  border-radius: 50%;
+  cursor: pointer;
+
+  transform: scale(.5);   /*css3动画*/
+  transition: transform .6s ease-in-out, background-color .3s;  /*css3*/
+
+  vertical-align: middle;
+
+  /*同级样式*/
+  &.is-center {   /*对应图片在中间的样式*/ 
+    transform: scale(1);   /*css3动画*/
+    background-color: #888;
+
+    &::after {
+      font-family: 'icons-turn-arrow';  /*引用字体文件*/
+      content: '\e600';   /*使用字体文件的Unicode码对字体进行引用*/
+      font-size: 80%;
+
+      line-height: 30px;
+      color: #fff;
+
+      /*
+      * 屏幕渲染机制：灰阶渲染（控制边缘亮度，所耗内存相对较低，应用于手机） 亚像素渲染（效果更好，所耗内存相对更高，应用于Mac等
+      */
+      -webkit-font-smoothing: antialiased;  /* 开启chrome在Mac下字体渲染的灰阶平滑 */
+      -moz-osx-font-smoothing: grayscale;   /* 开启firefox在Mac下字体渲染的灰阶平滑 */
+    }
+
+
+    &.is-inverse{   /*图片翻转过来的样式*/
+      background-color: #555;
+      transform: rotateY(180deg);   /*css3动画 翻转180°*/
+    }
+  }
+}

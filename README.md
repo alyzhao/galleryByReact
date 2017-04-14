@@ -27,6 +27,7 @@
 遇到的错误:
 	1.imageDatas没有解析出来,defaut.js中添加对.json的解析 npm install json-loader
 	2.App.less 没有解析出来, npm install less-loader    // 尝试另一种方法使用lessc 和 wr
+	3.iconfont 先收藏再下载源码
 
 
 

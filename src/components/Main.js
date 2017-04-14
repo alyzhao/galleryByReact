@@ -4,6 +4,7 @@ require('styles/App.less');
 import React from 'react';
 import ReactDOM from 'react-dom';
 import ImgFigure from './imgPos';
+import ControllerUnits from './controllerUnits.js';
 import {getRangeRandom, get30DegRandom} from './function'
 
 // 获取图片片相关数据
@@ -45,10 +46,40 @@ class GalleryByReactApp extends React.Component {
 		// 初始化state,即图片的left,top
 		this.state = {
 			imgsArrangeArr : [
-				{
-					pos: {left: 0,top: 0}
-				}
+				// {
+				// 	pos: {left: 0,top: 0},
+				// 	rotate: 0,	// 图片的旋转角度
+				// 	isInverse: false,	// 设置图片是否翻转的状态
+				// 	isCenter: false	// 默认图片不居中
+				// }
 			]
+		}
+	}
+
+	/*
+	 * 翻转居中的图片 
+	 * @param index 当前呗执行inverse操作的图片对用图片信息数组的index值
+	 * @return {function} 闭包函数,return一个真正待被执行的函数
+	 */
+	inverse (index) {
+		return function () {
+			let imgsArrangeArr = this.state.imgsArrangeArr;
+			imgsArrangeArr[index].isInverse = !imgsArrangeArr[index].isInverse;	  // 翻转到另一面
+
+			this.setState({
+				imgsArrangeArr: imgsArrangeArr
+			});
+		}.bind(this);	
+	}
+
+	/*
+	 * 当非居中的图片被点击时，用rearrange函数，居中对用的index图片
+	 * @param index,需要被居中的图片信息数组中的index
+	 * @return {function} 闭包函数
+	 */
+	center (index) {
+		return function () {
+			this.rearrange(index)
 		}
 	}
 
@@ -79,7 +110,9 @@ class GalleryByReactApp extends React.Component {
 
 		// 居中centerIndex的图片
 		imgsArrangeCenterArr[0] = {
-			pos: centerPos
+			pos: centerPos,
+			rotate: 0,
+			isCenter: true
 		}
 
 		// 布局上部的图片
@@ -95,7 +128,9 @@ class GalleryByReactApp extends React.Component {
 				pos: {
 					left: getRangeRandom(vPosRangeX[0], vPosRangeX[1]),		// 调用上面的在区间内取随机数的函数
 					top: getRangeRandom(vPosRangeTopY[0], vPosRangeTopY[1])
-				}
+				},
+				rotate: get30DegRandom(),
+				isCenter: false
 			}
 		})
 
@@ -113,13 +148,15 @@ class GalleryByReactApp extends React.Component {
 				pos: {
 					left: getRangeRandom(hPosRangeLOrRX[0], hPosRangeLOrRX[1]),
 					top: getRangeRandom(hPosRangeY[0], hPosRangeY[1])
-				}
+				},
+				rotate: get30DegRandom(),
+				isCenter: false
 			}
 		}
 
 		// 取出的上部图片重新放回
 		if (imgsArrangeTopArr && imgsArrangeTopArr[0]) {
-			imgsArrangeArr.splice(topImgSpliceIndex, 0, imgsArrangeCenterArr[0]);
+			imgsArrangeArr.splice(topImgSpliceIndex, 0, imgsArrangeTopArr[0]);
 		}
 		// 取出的中间图片放回
 		imgsArrangeArr.splice(centerIndex, 0, imgsArrangeCenterArr[0]);
@@ -184,19 +221,26 @@ class GalleryByReactApp extends React.Component {
 					pos: {
 						left: 0,
 						top: 0
-					}
+					},
+					rotate: 0,
+					isInverse: false,
+					isCenter: false
 				}
 			}
+			// 图片
+			imgFigures.push(<ImgFigure key={index} data={item} ref={'imgFigure' + index} arrange={this.state.imgsArrangeArr[index]} inverse={this.inverse(index)} center={this.center(index).bind(this)}/>)
 
-			imgFigures.push(<ImgFigure key={index} data={item} ref={'imgFigure' + index} arrange={this.state.imgsArrangeArr[index]}/>)
+			// 底部控制组件
+			controllerUnits.push(<ControllerUnits key={index} arrange={this.state.imgsArrangeArr[index]} inverse={this.inverse(index)} center={this.center(index).bind(this)}/>)
+
 
 		}.bind(this))
 
 		return (
 			<section className="stage" ref="stage">
-				<secion className="img-sec">
+				<section className="img-sec">
 					{imgFigures}
-				</secion>
+				</section>
 				<nav className="controller-nav">
 					{controllerUnits}
 				</nav>
@@ -205,7 +249,5 @@ class GalleryByReactApp extends React.Component {
 	}
 }
 
-// AppComponent.defaultProps = {
-// };
 
 export default GalleryByReactApp;
