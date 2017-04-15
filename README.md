@@ -1,33 +1,34 @@
-##记录问题
-1.修改测试的端口号在cfg/default.js 中修改dfltPor
-2.git 操作:
-	> 新建repositories 
-	> git clone url
-	> git add -A 	// 全部添加
-	> git commit -m "describe"
-	> git push 		// 提交到github
-3.ES6特性：
-	let  申明块级作用变量
-	const  申明常量
-	extends  继承
-	super	关键字，它指代父类的实例（即父类的this对象）。子类必须在constructor方法中调用super方法，否则新建实例时会报错。
-	arrow function 	(parma) => {}
-	`...${a}...` 	输出变量
-	export与export default均可用于导出常量、函数、文件、模块等
-	import (常量 | 函数 | 文件 | 模块)名的方式将其导入
+## 项目概览
+链接:https://gegehehehe.github.io/galleryByReact/ <br />
 
-4.Array的map()方法
-	arr.map((x) => retuen x*x )		// 输出数组元素的平方
+项目需求：
+- 刷新网页，每张图片随机排布，而且图片在-30度~30度之间随机旋转
+- 点击位于中心的图片，翻转
+- 点击除了中心外的图片，与中心图片互换位置
+- 圆点导航栏：
+  - 位于中心的图片所在的导航点，高亮显示。点击该圆点，图片翻转
+  - 位于四周的图片所在的导航点，被点击时，与中心图片互换位置
 
+## 项目简介
+- 使用`YEOMAN`搭建项目，生成项目文件、代码结构
+- 使用`webpack`实现前端自动化
+- 使用`HTML5`新增标签，如`<section>、<figure>、<figcaption>、<nav>`等
+- 使用`lessc`编译器将less文件编译成css文件，并使用`wr`工具，实现chrome调试样式并映射到本地文件保存
+- 使用`react+ES6`框架完成画廊页面制作
+- 使用`CSS3`的transition属性，实现旋转、平移、背景色的逐渐过渡
+- 使用`iconfont`字体文件代替图片文件，支持CSS3对字体的修饰效果
+- 使用`json`格式存放图片信息
 
+## 在本地打开项目
+```bash
+# 在终端执行以下命令安装环境依赖(下载慢的情况下，可以使用淘宝镜像：cnpm；或者直接在终端使用代理翻墙)
+  npm install
 
+# 安装成功后执行以下命令，即可在浏览器中打开
+  npm start
 
-
-
-遇到的错误:
-	1.imageDatas没有解析出来,defaut.js中添加对.json的解析 npm install json-loader
-	2.App.less 没有解析出来, npm install less-loader    // 尝试另一种方法使用lessc 和 wr
-	3.iconfont 先收藏再下载源码
-
+# dist文件的编译，执行
+  npm run dist
+```
 
 
